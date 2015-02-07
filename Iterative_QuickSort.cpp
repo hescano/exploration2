@@ -139,7 +139,7 @@ using namespace std;
 		start = std::clock();
 		QuickSort_Iterative(numbers, 0, len - 1);
 		end = std::clock();
-        cout << "Time to sort " << len << "elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
+        cout << "Time to sort " << len << " elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
 
 //		for (int i = 0; i < len; i++)
 //		  cout << numbers[i] << " ";
