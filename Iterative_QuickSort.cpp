@@ -1,11 +1,12 @@
 // Done
-// WARNIING: This will NOT work with duplicates, and cannot work with them.
+// WARNIING: This takes a while to create the array, because it must ensure unique items, the algorithm cannot work with duplicates.
 
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <string>
 #include <vector>
+#include <algorithm>    // std::find
 
 using namespace std;
 
@@ -108,18 +109,21 @@ using namespace std;
         ifstream fin ("Numbers/numbers.txt"); //file
 
         int temp = 0;
+//        int len = 10000;
+//        int count = 0;
+        
+        
         while (!fin.eof())
         {
             fin >> temp;
+            while(std::find(vec.begin(), vec.end(), temp) != vec.end()) { temp++; }
             vec.push_back(temp);
         }
         fin.close();
         
-//        int len = vec.size();
-        int len = 10;
+        int len = vec.size();
 //        int num = len;
-        int numbers[len];
-        
+        int numbers[len];        
         
         for(int i = 0; i < len; ++i) {
             numbers[i] = vec[i];
@@ -127,18 +131,19 @@ using namespace std;
 //            num--;
         }
         
-        for (int i = 0; i < len; i++)
-            cout << numbers[i] << " ";
-        cout << endl;
+//        for (int i = 0; i < len; i++)
+//            cout << numbers[i] << " ";
+//        cout << endl;
 
+        cout << "Starting sort!\n";
 		start = std::clock();
 		QuickSort_Iterative(numbers, 0, len - 1);
 		end = std::clock();
-        std::cout << "Time to sort = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
+        cout << "Time to sort = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
 
-		for (int i = 0; i < len; i++)
-		  cout << numbers[i] << " ";
-        cout << endl;
+//		for (int i = 0; i < len; i++)
+//		  cout << numbers[i] << " ";
+//        cout << endl;
         
         return 0;
 	}
