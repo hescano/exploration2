@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import java.nio.file.Files;
+import java.util.Scanner;
 
 /*****************************************************************************
 * Iterative_QuickSort Class
@@ -87,10 +89,20 @@ class Iterative_QuickSort {
 	/*****************************************************************************
 	* Main()
 	*****************************************************************************/
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException
 	{
-		int[] numbers = { 3, 8, 7, 5, 2, 1, 9, 6, 4 };
-		int len = 9;
+
+      int len = 10000;
+      int numbers[] = new int[len];
+      
+      //Change for file input
+      Scanner scan = new Scanner(new File("numbers15.txt"));
+      for (int i = 0; scan.hasNextInt(); i++) 
+      {
+         int x = scan.nextInt();
+
+         numbers[i] = x;
+      }
 
 		System.out.println();
 		System.out.println("Iterative QuickSort By Iterative Method");
