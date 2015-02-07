@@ -1,0 +1,68 @@
+for(int i = 0; i < MAX_VALUE; i++)
+      {
+         arr[i] = randInt(0, MAX_VALUE);
+      }
+      saveFile(java.util.Arrays.toString(arr), "quicksort - random.txt");
+     
+      
+      //saves sorted values 0 to one million in a file    
+      for(int i = 0; i < MAX_VALUE; i++)
+      {
+         arr[i] = i;
+      }
+      saveFile(java.util.Arrays.toString(arr), "quicksort - sorted.txt");
+      int halfSize = (MAX_VALUE / 2);
+      int[] arr1 = new int[MAX_VALUE];
+      
+      //saves almost sorted random values
+      for(int i = 0; i < halfSize; i++)
+      {
+         arr1[i] =  i;
+      }
+      for(int i = halfSize; i < MAX_VALUE; i++)
+      {
+         arr1[i] = randInt(0, MAX_VALUE);
+      }
+      saveFile(java.util.Arrays.toString(arr1), "quicksort - almostsorted.txt");
+   
+//saves random values 0 to one million in a file
+      int[] arr = new int[MAX_VALUE];
+      int x = 0;
+      //saves sorted values one million to 0 in a file    
+      for(int i = MAX_VALUE - 1; i >= 0; i--)
+      {
+         arr[x++] =  i;
+      }
+      saveFile(java.util.Arrays.toString(arr), "quicksort - reversed sorted.txt");
+
+
+
+
+
+
+
+
+
+
+
+
+   public static void saveFile(String content, String fileName)
+   {
+      try
+      {
+         PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+         writer.println(content);
+         writer.close();
+      }
+      catch(java.io.FileNotFoundException|java.io.UnsupportedEncodingException e)
+      {}
+   }
+
+
+
+
+   public static int randInt(int min, int max) 
+   {
+      return new Random().nextInt((max - min) + 1) + min;
+   }
+         

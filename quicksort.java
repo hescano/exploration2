@@ -1,58 +1,105 @@
+import java.util.Random;
+import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class quicksort
 {
-   public static void main(String[] args)
+   public static final int MAX_VALUE = 1000000;
+   
+   public static void main(String[] args) throws Exception
    {
-      int[] arr = {45,22, 233, 55, 43, 54, 32 };
-      System.out.println(java.util.Arrays.toString(arr));
-      Stopwatch watch = new Stopwatch(); //this constructor starts automatically
+      int[] arr = new int[MAX_VALUE];
+      Stopwatch watch = new Stopwatch();
+      
+      //Tests the quicksort algorithm with one million consecutive sorted elements 0-999999
+      arr = getArrayFromFile("Numbers\\quicksort - sorted.txt");
       quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort");
-      System.out.println(java.util.Arrays.toString(arr));
+      watch.end("QuickSort with Sorted Array:");
+      
+      //Tests the quicksort algorithm with one million almost sorted elements
+      arr = getArrayFromFile("Numbers\\quicksort - almostsorted.txt");
+      watch = new Stopwatch();
+      quickSort(arr, 0, arr.length - 1);
+      watch.end("QuickSort with Almost Sorted Array:");
+      
+      //Tests the quicksort algorithm with one million random elements, with range 0-999999
+      arr = getArrayFromFile("Numbers\\quicksort - random.txt");
+      watch = new Stopwatch();
+      quickSort(arr, 0, arr.length - 1);
+      watch.end("QuickSort with Random Sorted Array:");
+      
+      //Tests the quicksort algorithm with one million consecutive sorted elements 999999-0
+      arr = getArrayFromFile("Numbers\\quicksort - reversed sorted.txt");
+      watch = new Stopwatch();
+      quickSort(arr, 0, arr.length - 1);
+      watch.end("QuickSort with Reversed Sorted Array:");
+      
+      //Tests the quicksort algorithm with one million elements with the same value (1000000)
+      arr = getArrayFromFile("Numbers\\quicksort - same.txt");
+      watch = new Stopwatch();
+      quickSort(arr, 0, arr.length - 1);
+      watch.end("QuickSort with same elements in the Array:");
    }
    
-   public static void quickSort(int[] arr, int start, int end)
+   public static int[] getArrayFromFile(String fileName)
    {
-      int index = partition(arr, start, end);
-      
-      if (start < index  - 1)
+      int[] arr = new int[MAX_VALUE];
+      try
       {
-         quickSort(arr, start, index - 1);
+         BufferedReader reader = new BufferedReader(new FileReader(fileName));
+         String line = null;
+         Scanner scanner = null;
+         int index = 0;
+         
+         while ((line = reader.readLine()) != null) {
+            scanner = new Scanner(line);
+            scanner.useDelimiter(", ");
+            
+            while (scanner.hasNext()) {
+               arr[index++] = scanner.nextInt();
+            }
+            index = 0;
+         }
       }
-      
-      if (end > index)
-      {
-         quickSort(arr, index, end);
-      }
+      catch(IOException e)
+      {}
+      return arr;
    }
    
-   public static int partition(int[] arr, int left, int right)
+   public static void quickSort(int[] arr, int left, int right)
    {
-      int pivot = arr[left];
-      
-      while (left <= right)
+
+      int i = left;
+      int j = right;
+      int tmp;
+      int pivot = arr[(left + right) / 2];
+
+      while (i <= j)
       {
-         while (arr[left] < pivot)
-         {
-            left++;
-         }
+         while (arr[i] < pivot)
+            i++;
+         while (arr[j] > pivot)
+            j--;
          
-         while (arr[right] > pivot)
+         if (i <= j)
          {
-            right--;
-         }
-         
-         //swap
-         if (left <= right)
-         {
-            int tmp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = tmp;
-            left++;
-            right--;
+            tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+            i++;
+            j--;
          }
       }
-      
-      return left;
+
+      if (left < j)
+         quickSort(arr, left, j);
+      if (i < right)
+         quickSort(arr, i, right);
    }
 }
 
