@@ -1,11 +1,12 @@
 import java.io.*;
 import java.nio.file.Files;
-import java.util.Scanner;
+import java.util.*;
 
 public class BubbleSort
 {
-	public static <T extends Comparable <T>> void sort(T[] pArray,int pLength)
+	public static void sort(int[] pArray)
 	{
+//        System.out.println(pArray.length);
 		int numCompares = pArray.length - 1;
 
 		while (numCompares != 0)
@@ -13,9 +14,9 @@ public class BubbleSort
 			int last = 1;
 			for (int i = 1; i <= numCompares; i++)
 			{
-				if (pArray[i-1].compareTo(pArray[i]) == -1)
+				if (pArray[i-1] > pArray[i])
 				{
-					T temp = pArray[i-1];
+					int temp = pArray[i-1];
 					pArray[i-1] = pArray[i];
 					pArray[i] = temp;
 					last = i;
@@ -23,59 +24,49 @@ public class BubbleSort
 			}
 			numCompares = last - 1;
 		}
-		
+        
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException
 	{
-		int size = 10000;
+        List<String> files = new ArrayList<String>();
+        
+        files.add("Numbers/numbers.txt");
+        files.add("Numbers/numbers15.txt");
+        files.add("Numbers/numbers20.txt");
+        files.add("Numbers/numbers25.txt");
+        files.add("Numbers/numbers30.txt");
+        files.add("Numbers/numbers35.txt");
+        files.add("Numbers/numbers40.txt");
+        files.add("Numbers/numbers45.txt");
+        files.add("Numbers/numbers50.txt");
+        files.add("Numbers/numbers100.txt");
+        
+        
+		int size = 1000000;
 		double startTime = 0;
 		double endTime = 0;
 		double totalTime = 0;
-		Character CHARarray[] = new Character[size];
-		Integer INTarray[] = new Integer[size];
-		Double DOUBLEarray[] = new Double[size];
-		Float FLOATarray[] = new Float[size];
-		
-		//Change for file input
-		Scanner scan = new Scanner(new File("num.txt"));
-		for (int i = 0; scan.hasNextInt(); i++) 
-		{
-			int x = scan.nextInt();
-				//	(i * 3) % (size + mod);
-			CHARarray[i] = (char) (x % 26 + 65); //A-Z 
-			INTarray[i] = x;
-			DOUBLEarray[i] = x + .1;
-			FLOATarray[i] =  (float)(x + .1);
-		}
-	  	
-		startTime = System.currentTimeMillis();
-		sort(CHARarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT CHAR " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(INTarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT INT " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(FLOATarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT FLOAT " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(DOUBLEarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT DOUBLE " + totalTime);
-		System.out.println("End of Compare");
+
+		int array[] = new int[size];
+
+        //Change for file input
+        for(int j = 0; j < files.size(); j++)
+        {
+            Scanner scan = new Scanner(new File(files.get(j)));
+
+            int i = 0;
+            for (; scan.hasNextInt(); i++) { array[i] = scan.nextInt(); }
+
+            int[] arr = Arrays.copyOf(array, i);
+
+            startTime = System.currentTimeMillis();
+            sort(arr);
+            endTime = System.currentTimeMillis();
+            totalTime = (endTime - startTime) / 1000;
+            System.out.println("Sorted array size " + i + " in " + totalTime + " seconds");
+        }
+
 	}
 	
 }

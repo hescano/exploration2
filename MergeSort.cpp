@@ -3,34 +3,75 @@
 #include <ctime>
 #include <string>
 #include <vector>
-
 using namespace std;
 
-template <typename T>
-void sort(T pArray[], int pLength)
+/*
+ * Algorithum found on: http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Merge_sort#C.2B.2B
+ */
+ 
+void merge(int a[], const int low, const int mid, const int high)
 {
-   int numCompares = pLength - 1;
-
-   while (numCompares != 0)
-   {
-      int last = 1;
-      for (int i = 1; i <= numCompares; i++)
-      {
-         if (pArray[i - 1] > pArray[i])
-         {
-            T temp = pArray[i - 1];
-            pArray[i - 1] = pArray[i];
-            pArray[i] = temp;
-            last = i;
-         }
-      }
-      numCompares = last - 1;
-   }
+	// Variables declaration. 
+	int * b = new int[high+1-low];
+	int h,i,j,k;
+	h=low;
+	i=0;
+	j=mid+1;
+	// Merges the two array's into b[] until the first one is finish
+	while((h<=mid)&&(j<=high))
+	{
+		if(a[h]<=a[j])
+		{
+			b[i]=a[h];
+			h++;
+		}
+		else
+		{
+			b[i]=a[j];
+			j++;
+		}
+		i++;
+	}
+	// Completes the array filling in it the missing values
+	if(h>mid)
+	{
+		for(k=j;k<=high;k++)
+		{
+			b[i]=a[k];
+			i++;
+		}
+	}
+	else
+	{
+		for(k=h;k<=mid;k++)
+		{
+			b[i]=a[k];
+			i++;
+		}
+	}
+	// Prints into the original array
+	for(k=0;k<=high-low;k++) 
+	{
+		a[k+low]=b[k];
+	}
+	delete[] b;
 }
-
+ 
+void sort( int a[], const int low, const int high )
+{
+	int mid;
+	if( low < high )
+	{
+		mid = ( low + high ) / 2;
+		sort( a, low, mid );
+		sort( a, mid + 1, high );
+		merge( a, low, mid, high );
+	}
+}
+ 
 int main()
 {
-   cout << "Iterative QuickSort By Iterative Method\n";
+	cout << "Merge Sort\n";
 
         vector<string> files;
         
@@ -74,11 +115,10 @@ int main()
             }
 
             start = std::clock();
-            sort(numbers, len);
+            sort(numbers, 0, len - 1);
             end = std::clock();
             cout << "Time to sort " << len << " elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
 
         }
         return 0;
 }
-

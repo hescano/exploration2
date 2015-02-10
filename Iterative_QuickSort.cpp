@@ -101,49 +101,66 @@ using namespace std;
 	{
 		cout << "Iterative QuickSort By Iterative Method\n";
 
+        vector<string> files;
+        
+        //        files.push_back("Numbers/numbers1000.txt");
+        files.push_back("Numbers/numbers100.txt");
+        files.push_back("Numbers/numbers50.txt");
+        files.push_back("Numbers/numbers45.txt");
+        files.push_back("Numbers/numbers40.txt");
+        files.push_back("Numbers/numbers35.txt");
+        files.push_back("Numbers/numbers30.txt");
+        files.push_back("Numbers/numbers25.txt");
+        files.push_back("Numbers/numbers20.txt");
+        files.push_back("Numbers/numbers15.txt");
+        files.push_back("Numbers/numbers.txt");
+        
+        
         std::clock_t start;
         std::clock_t end;
         
         vector<int> vec;
-        
-        ifstream fin ("Numbers/numbers.txt"); //file
-
-        int temp = 0;
-//        int len = 10000;
-//        int count = 0;
-        
-        
-        while (!fin.eof())
+        while(files.size() > 0)
         {
-            fin >> temp;
-            while(std::find(vec.begin(), vec.end(), temp) != vec.end()) { temp++; }
-            vec.push_back(temp);
-        }
-        fin.close();
-        
-        int len = vec.size();
-//        int num = len;
-        int numbers[len];        
-        
-        for(int i = 0; i < len; ++i) {
-            numbers[i] = vec[i];
-//            numbers[i] = num;
-//            num--;
-        }
-        
-//        for (int i = 0; i < len; i++)
-//            cout << numbers[i] << " ";
-//        cout << endl;
+            cout << "using file " << files.back() << endl;
+            ifstream fin (files.back()); //file
+            files.pop_back();
+            int temp = 0;
+    //        int len = 10000;
+    //        int count = 0;
 
-        cout << "Starting sort!\n";
-		start = std::clock();
-		QuickSort_Iterative(numbers, 0, len - 1);
-		end = std::clock();
-        cout << "Time to sort " << len << " elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
 
-//		for (int i = 0; i < len; i++)
-//		  cout << numbers[i] << " ";
-//        cout << endl;
-        
+            while (!fin.eof())
+            {
+                fin >> temp;
+                while(std::find(vec.begin(), vec.end(), temp) != vec.end()) { temp++; }
+                vec.push_back(temp);
+            }
+            fin.close();
+
+            int len = vec.size();
+    //        int num = len;
+            int numbers[len];        
+
+            for(int i = 0; i < len; ++i) {
+                numbers[i] = vec[i];
+    //            numbers[i] = num;
+    //            num--;
+            }
+
+    //        for (int i = 0; i < len; i++)
+    //            cout << numbers[i] << " ";
+    //        cout << endl;
+
+            cout << "Starting sort!\n";
+            start = std::clock();
+            QuickSort_Iterative(numbers, 0, len - 1);
+            end = std::clock();
+            cout << "Time to sort " << len << " elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
+
+    //		for (int i = 0; i < len; i++)
+    //		  cout << numbers[i] << " ";
+    //        cout << endl;
+        }
         return 0;
 	}

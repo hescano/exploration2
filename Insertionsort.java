@@ -1,6 +1,6 @@
-package insertionsort;
-
-import java.util.concurrent.TimeUnit;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.*;
 
 /**
  *
@@ -77,101 +77,45 @@ public class Insertionsort {
 			array[j] = x;
 		}
 	}
-	public static void main(String[] args) {
-		int size = 50000;
+	public static void main(String[] args) throws FileNotFoundException
+    {
+		List<String> files = new ArrayList<String>();
+        
+        files.add("Numbers/numbers.txt");
+        files.add("Numbers/numbers15.txt");
+        files.add("Numbers/numbers20.txt");
+        files.add("Numbers/numbers25.txt");
+        files.add("Numbers/numbers30.txt");
+        files.add("Numbers/numbers35.txt");
+        files.add("Numbers/numbers40.txt");
+        files.add("Numbers/numbers45.txt");
+        files.add("Numbers/numbers50.txt");
+        files.add("Numbers/numbers100.txt");
+        files.add("Numbers/numbers1000.txt");
+        
+		int size = 1000000;
 		double startTime = 0;
 		double endTime = 0;
 		double totalTime = 0;
-		Character CHARarray[] = new Character[size];
-		Integer INTarray[] = new Integer[size];
-		Double DOUBLEarray[] = new Double[size];
-		Float FLOATarray[] = new Float[size];
-		int x = 0;
-		int mod = 0;
-		if ((size % 3) == 0)
-			mod = 1;
-		if ((size % 3) == 2)
-			mod = -1;
 
-		for (int i = 0; i < size; i++) {
-			x = (i * 3) % (size + mod);
-			CHARarray[i] = (char) (x % 26 + 65); //A-Z 
-			INTarray[i] = x;
-			DOUBLEarray[i] = x + .1;
-			FLOATarray[i] =  (float)(x + .1);
-		}
-		
-		
-		char carray[] = new char[size];
-		for (int i  = 0; i< size; i++) {
-			carray[i] = CHARarray[i];
-		}
-		int iarray[] = new int[size];
-		for (int i  = 0; i< size; i++) {
-			iarray[i] = INTarray[i];
-		}
-		float farray[] = new float[size];
-		for (int i  = 0; i< size; i++) {
-			farray[i] = FLOATarray[i];
-		}
-		double darray[] = new double[size];
-		for (int i  = 0; i< size; i++) {
-			darray[i] = DOUBLEarray[i];
-		}
-		
-		startTime = System.currentTimeMillis();
-		sort(CHARarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT CHAR " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(INTarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT INT " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(FLOATarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT FLOAT " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		sort(DOUBLEarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT DOUBLE " + totalTime);
-		
-		startTime = System.currentTimeMillis();
-		csort(carray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT char " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		isort(iarray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT int " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		fsort(farray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT float " + totalTime);
-		
-		
-		startTime = System.currentTimeMillis();
-		dsort(darray, size);
-		endTime = System.currentTimeMillis();
-		totalTime = (endTime - startTime) / 1000;
-		System.out.println("SORT double " + totalTime);
-	}
+		int array[] = new int[size];
+
+        //Change for file input
+        for(int j = 0; j < files.size(); j++)
+        {
+            Scanner scan = new Scanner(new File(files.get(j)));
+
+            int i = 0;
+            for (; scan.hasNextInt(); i++) { array[i] = scan.nextInt(); }
+
+            int[] arr = Arrays.copyOf(array, i);
+
+            startTime = System.currentTimeMillis();
+            isort(arr, arr.length);
+            endTime = System.currentTimeMillis();
+            totalTime = (endTime - startTime) / 1000;
+            System.out.println("Sorted array size " + i + " in " + totalTime + " seconds");
+        }
+    }
 	
 }

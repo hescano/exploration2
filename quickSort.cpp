@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -52,27 +54,54 @@ void quicksort(t A[], int lo, int hi)
 
 int main()
 {
-   clock_t start;
-   clock_t end;
-   
-   //change these three based on the file
-   int SIZE1 = 15000; //number of items
-   int TEST_ARRAY1[15000]; //number of items
-   ifstream fin ("numbers15.txt"); //file
+   cout << "Iterative QuickSort By Iterative Method\n";
 
-   int temp = 0;
-   for (int i = 0; i < SIZE1; i++)
-   {
-      fin >> temp;
-      TEST_ARRAY1[i] = temp;
-   }
-   fin.close();
+        vector<string> files;
+        
+        files.push_back("Numbers/numbers1000.txt");
+        files.push_back("Numbers/numbers100.txt");
+        files.push_back("Numbers/numbers50.txt");
+        files.push_back("Numbers/numbers45.txt");
+        files.push_back("Numbers/numbers40.txt");
+        files.push_back("Numbers/numbers35.txt");
+        files.push_back("Numbers/numbers30.txt");
+        files.push_back("Numbers/numbers25.txt");
+        files.push_back("Numbers/numbers20.txt");
+        files.push_back("Numbers/numbers15.txt");
+        files.push_back("Numbers/numbers.txt");
+        
+        
+        std::clock_t start;
+        std::clock_t end;
+        
+        vector<int> vec;
+        while(files.size() > 0)
+        {
+            vec.clear();
+            
+            ifstream fin (files.back()); //file
+            files.pop_back();
+            int temp = 0;
 
-   start = clock();
-   quicksort(TEST_ARRAY1, 0, SIZE1 - 1);
-   end = clock();
-   
-   cout << (double)(end - start)/CLOCKS_PER_SEC;
-   
-   return 0;
+            while (!fin.eof())
+            {
+                fin >> temp;
+                vec.push_back(temp);
+            }
+            fin.close();
+
+            int len = vec.size();
+            int numbers[len];        
+
+            for(int i = 0; i < len; ++i) {
+                numbers[i] = vec[i];
+            }
+
+            start = std::clock();
+            quicksort(numbers, 0, len - 1);
+            end = std::clock();
+            cout << "Time to sort " << len << " elements = " << (double)(end - start) / CLOCKS_PER_SEC << endl;
+
+        }
+        return 0;
 }

@@ -1,11 +1,6 @@
-import java.util.Random;
-import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.*;
 
 public class quicksort
 {
@@ -13,37 +8,43 @@ public class quicksort
    
    public static void main(String[] args) throws Exception
    {
-      int[] arr = new int[MAX_VALUE];
-      Stopwatch watch = new Stopwatch();
-      
-      //Tests the quicksort algorithm with one million consecutive sorted elements 0-999999
-      arr = getArrayFromFile("Numbers\\quicksort - sorted.txt");
-      quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort with Sorted Array:");
-      
-      //Tests the quicksort algorithm with one million almost sorted elements
-      arr = getArrayFromFile("Numbers\\quicksort - almostsorted.txt");
-      watch = new Stopwatch();
-      quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort with Almost Sorted Array:");
-      
-      //Tests the quicksort algorithm with one million random elements, with range 0-999999
-      arr = getArrayFromFile("Numbers\\quicksort - random.txt");
-      watch = new Stopwatch();
-      quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort with Random Sorted Array:");
-      
-      //Tests the quicksort algorithm with one million consecutive sorted elements 999999-0
-      arr = getArrayFromFile("Numbers\\quicksort - reversed sorted.txt");
-      watch = new Stopwatch();
-      quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort with Reversed Sorted Array:");
-      
-      //Tests the quicksort algorithm with one million elements with the same value (1000000)
-      arr = getArrayFromFile("Numbers\\quicksort - same.txt");
-      watch = new Stopwatch();
-      quickSort(arr, 0, arr.length - 1);
-      watch.end("QuickSort with same elements in the Array:");
+      List<String> files = new ArrayList<String>();
+        
+        files.add("Numbers/numbers.txt");
+        files.add("Numbers/numbers15.txt");
+        files.add("Numbers/numbers20.txt");
+        files.add("Numbers/numbers25.txt");
+        files.add("Numbers/numbers30.txt");
+        files.add("Numbers/numbers35.txt");
+        files.add("Numbers/numbers40.txt");
+        files.add("Numbers/numbers45.txt");
+        files.add("Numbers/numbers50.txt");
+        files.add("Numbers/numbers100.txt");
+        files.add("Numbers/numbers1000.txt");
+        
+		int size = 1000000;
+		double startTime = 0;
+		double endTime = 0;
+		double totalTime = 0;
+
+		int array[] = new int[size];
+
+        //Change for file input
+        for(int j = 0; j < files.size(); j++)
+        {
+            Scanner scan = new Scanner(new File(files.get(j)));
+
+            int i = 0;
+            for (; scan.hasNextInt(); i++) { array[i] = scan.nextInt(); }
+
+            int[] arr = Arrays.copyOf(array, i);
+
+            startTime = System.currentTimeMillis();
+            quickSort(arr, 0, arr.length - 1);
+            endTime = System.currentTimeMillis();
+            totalTime = (endTime - startTime) / 1000;
+            System.out.println("Sorted array size " + i + " in " + totalTime + " seconds");
+        }
    }
    
    public static int[] getArrayFromFile(String fileName)
